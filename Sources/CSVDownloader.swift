@@ -30,7 +30,7 @@ class CSVDownloader {
             guard let self = self else { return }
 
             if let data = data, let csvString = String(data: data, encoding: .utf8) {
-                self.parseCSVString(csvString, destination: self.destination)
+                self.parseCSVString(csvString, destination: self.destination, sourceURL: csvURL)
             }
 
             end = true
@@ -63,7 +63,7 @@ class CSVDownloader {
         print("\r  ")
     }
 
-    private func parseCSVString(_ csvString: String, destination: String) {
+    private func parseCSVString(_ csvString: String, destination: String, sourceURL: URL) {
 
         var localizables = [Localizable]()
         var rows = csvString.components(separatedBy: "\n")
@@ -109,7 +109,8 @@ class CSVDownloader {
                     generator = LocalizableGenerator_Android.self
                 }
 
-                try generator.createFile(for: languages[loopCount - 1], with: localizables, destination: destination)
+                localizables.sort(by: { $0.key < $1.key })
+                try generator.createFile(for: languages[loopCount - 1], with: localizables, destination: destination, sourceURL: sourceURL)
 
             } catch {
                 print("❌ ERROR CREATING LOCALIZABLE ❌".red)
