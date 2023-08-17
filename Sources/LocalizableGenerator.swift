@@ -29,7 +29,7 @@ class LocalizableGenerator_iOS: LocalizableGenerator {
         }
         localizabeText += "\n// End of the generated file \n// Modification of this file by hand is strictly prohibited. \n// Please modify at: \(sourceURL.deletingLastPathComponent().absoluteString).\n"
         let timeString = Date().formatted(date: .long, time: .shortened)
-        localizabeText += "// Last Synced by \(NSFullUserName()) at \(timeString)"
+        localizabeText += "// Last Synced by \(NSFullUserName()) on \(timeString)\n"
 
         do {
             let folder = Folder.current
